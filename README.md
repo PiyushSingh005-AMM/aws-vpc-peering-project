@@ -124,20 +124,23 @@ This demonstrated how security group rules affect connectivity between instances
 
 ## Evidence and Screenshots
 
-The following evidence is intended to document the implementation:
+The following screenshots document the implementation and connectivity tests.
 
-- Successful App-A to App-B ping
-- Successful App-B to App-A ping
-- App-B private IP and hostname
-- ICMP blocked test
-- ICMP restored test
-- VPC configuration and CIDR ranges
-- Active VPC Peering connection
-- Route table configuration
-- Security group rules
-- SSH access through the Bastion Host
+### Connectivity Tests
 
-Screenshots will be added to the repository as they are uploaded.
+- [App-A to App-B ping success](screenshots/app-a-to-app-b-ping-success.png)
+- [App-B to App-A ping success](screenshots/app-b-to-app-a-ping-success.png)
+
+### Private Instance Access
+
+- [App-B private IP and hostname](screenshots/app-b-private-access.png)
+
+### Security Group Troubleshooting
+
+- [ICMP blocked test](screenshots/icmp-blocked.png)
+- [ICMP restored test](screenshots/icmp-restored.png)
+
+Additional screenshots of the VPC configuration, active VPC Peering connection, route tables, security group rules, and SSH access through the Bastion Host can be added as further evidence.
 
 ## Key Learnings
 
