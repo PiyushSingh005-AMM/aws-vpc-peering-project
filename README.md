@@ -6,7 +6,6 @@ This project demonstrates how to establish private network connectivity between 
 
 The infrastructure was created in the AWS Asia Pacific (Sydney) Region (`ap-southeast-2`).
 
-
 ## Architecture
 
 The project consists of two VPCs connected through an active VPC Peering connection. A Bastion Host in VPC-A provides an SSH entry point to the private EC2 instances in both VPCs.
@@ -30,7 +29,6 @@ flowchart LR
     Bastion --> AppA
     Bastion --> AppB
 ```
-
 
 ### VPC-A
 
@@ -122,13 +120,14 @@ The inbound ICMP rule was temporarily removed from App-A's security group to dem
 
 These tests demonstrated bidirectional private connectivity and the effect of security group rules on network traffic.
 
-
 ## Evidence and Screenshots
 
 ### Connectivity Tests
 
 - [App-A to App-B ping success](screenshots/app-a-to-app-b-ping-success.png)
 - [App-B to App-A ping success](screenshots/app-b-to-app-a-ping-success.png)
+- [App-A to App-B connectivity test](screenshots/app-a-to-app-b-connectivity-test.png)
+- [App-B to App-A connectivity test](screenshots/app-b-to-app-a-connectivity-test.png)
 
 ### Private Instance Access
 
@@ -149,23 +148,4 @@ These screenshots document private instance addressing, bidirectional connectivi
 - Using a Bastion Host to access private EC2 instances
 - Understanding security groups and network ACLs
 - Troubleshooting ICMP connectivity
-- Testing controlled network failure and recovery
-- Documenting cloud infrastructure using GitHub
-
-## Security Notes
-
-- Private EC2 instances do not need public IP addresses for VPC Peering communication.
-- SSH access should be restricted to trusted sources.
-- Security group rules should follow the principle of least privilege.
-- AWS private keys, access keys, passwords, and other credentials must never be committed to this repository.
-- Temporary troubleshooting rules should be reviewed and removed or restricted when no longer required.
-
-## Project Status
-
-The VPC Peering connection, route tables, Bastion Host SSH access, bidirectional connectivity tests, and ICMP failure-and-recovery demonstration have been completed and documented. The repository is ready for review.
-
----
-
-**Project:** AWS VPC Peering with Bastion Host and Private EC2 Connectivity  
-**Region:** Asia Pacific (Sydney) — `ap-southeast-2`  
-**Platform:** Amazon Web Services (AWS)
+- Testing
