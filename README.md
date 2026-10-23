@@ -140,7 +140,7 @@ The following screenshots document the implementation and connectivity tests.
 - [ICMP blocked test](screenshots/icmp-blocked.png)
 - [ICMP restored test](screenshots/icmp-restored.png)
 
-Additional screenshots of the VPC configuration, active VPC Peering connection, route tables, security group rules, and SSH access through the Bastion Host can be added as further evidence.
+Additional evidence, including VPC configuration, the active VPC Peering connection, route tables, security group rules, and SSH access through the Bastion Host, can be added as further screenshots.
 
 ## Key Learnings
 
