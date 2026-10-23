@@ -10,6 +10,28 @@ The infrastructure was created in the AWS Asia Pacific (Sydney) Region (`ap-sout
 
 The project consists of two VPCs connected through an active VPC Peering connection.
 
+
+```mermaid
+flowchart LR
+    Internet((Internet)) --> IGW[Internet Gateway]
+    IGW --> Bastion["Bastion Host<br/>10.10.1.10"]
+
+    subgraph VPC_A["VPC-A | 10.10.0.0/16"]
+        Bastion
+        AppA["App-A<br/>10.10.2.10<br/>Private EC2"]
+    end
+
+    subgraph VPC_B["VPC-B | 10.20.0.0/16"]
+        AppB["App-B<br/>10.20.1.10<br/>Private EC2"]
+    end
+
+    AppA <--> Peering["VPC Peering<br/>Active"]
+    Peering <--> AppB
+    Bastion --> AppA
+    Bastion --> AppB
+```
+
+
 ### VPC-A
 
 - **CIDR block:** `10.10.0.0/16`
@@ -146,3 +168,14 @@ The repository documentation and supporting screenshots are being organized for 
 **Project:** AWS VPC Peering with Bastion Host and Private EC2 Connectivity  
 **Region:** Asia Pacific (Sydney) — `ap-southeast-2`  
 **Platform:** Amazon Web Services (AWS)
+
+
+
+
+
+
+
+
+
+
+
