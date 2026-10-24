@@ -6,6 +6,10 @@ This project demonstrates how to establish private network connectivity between 
 
 The infrastructure was created in the AWS Asia Pacific (Sydney) Region (`ap-southeast-2`).
 
+## Project Report
+
+[Download the EWB VPC Peering Project Report (PDF)](./PiyushSingh_EWB_VPC_Peering_Final_Report_Fixed.pdf)
+
 ## Architecture
 
 The project consists of two VPCs connected through an active VPC Peering connection. A Bastion Host in VPC-A provides an SSH entry point to the private EC2 instances in both VPCs.
