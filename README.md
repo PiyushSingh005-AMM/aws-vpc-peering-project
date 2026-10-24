@@ -1,8 +1,9 @@
+
 # AWS VPC Peering with Bastion Host and Private EC2 Instances
 
 ## Project Overview
 
-This project demonstrates how to establish private network connectivity between two Amazon Virtual Private Clouds (VPCs) using VPC Peering. It uses a Bastion Host for SSH access to private EC2 instances and security groups to control network traffic.
+This project demonstrates private network connectivity between two Amazon Virtual Private Clouds (VPCs) using VPC Peering. A Bastion Host provides SSH access to private EC2 instances, while security groups control network traffic.
 
 The infrastructure was created in the AWS Asia Pacific (Sydney) Region (`ap-southeast-2`).
 
@@ -13,8 +14,6 @@ The complete 14-page project report documents the architecture, AWS configuratio
 [View or download the EWB VPC Peering Project Report (PDF)](./EWB-VPC-Peering-Project-Report_compressed.pdf)
 
 If the PDF preview does not load in GitHub, download the file and open it locally.
-
-
 
 ## Architecture
 
@@ -40,7 +39,6 @@ flowchart LR
     Bastion --> AppB
 ```
 
-
 ### VPC-A
 
 - **CIDR block:** `10.10.0.0/16`
@@ -62,15 +60,14 @@ flowchart LR
 - The Bastion Host provides an SSH entry point to the private EC2 instances.
 - App-A and App-B do not require public IP addresses for inter-VPC communication.
 
-## AWS Services Used
+## AWS Services and Components Used
 
-- Amazon VPC
+- Amazon Virtual Private Cloud (Amazon VPC)
 - VPC Peering
-- Amazon EC2
+- Amazon Elastic Compute Cloud (Amazon EC2)
 - Subnets and route tables
 - Internet Gateway
 - Security Groups
-- Network ACLs
 - Amazon Linux 2023
 - SSH and ICMP connectivity testing
 
@@ -95,7 +92,7 @@ The VPC Peering connection is active, and the relevant routes are configured in 
 Security groups control inbound and outbound traffic for the EC2 instances.
 
 - The Bastion Host provides the SSH entry point from the internet, restricted by its configured inbound rules.
-- App-A and App-B use private IPv4 addresses and do not require public IP addresses for communication across the VPC peering connection.
+- App-A and App-B use private IPv4 addresses and do not require public IP addresses for communication across the VPC Peering connection.
 - SSH access to private instances is permitted according to the configured security group rules.
 - ICMP rules control ping traffic between App-A and App-B.
 - A temporary broader inbound ICMP rule was added to App-A during troubleshooting to restore reverse ping connectivity.
@@ -130,8 +127,7 @@ The controlled failure test was performed from App-A (`10.10.2.10`) to App-B (`1
 - **Recovery test:** The ICMP rule was restored on App-B's security group. App-A repeated the same ping command and received four replies with 0% packet loss.
 - **SSH access:** The SSH inbound rule was kept in place during the test.
 
-Evidence: `screenshots/11-icmp-blocked.png` and `screenshots/12-icmp-restored.png`.
-
+Evidence: [ICMP blocked test](screenshots/11-icmp-blocked.png) and [ICMP restored test](screenshots/12-icmp-restored.png).
 
 ## Evidence and Screenshots
 
