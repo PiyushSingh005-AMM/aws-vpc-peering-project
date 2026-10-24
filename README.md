@@ -19,24 +19,26 @@ If the PDF preview does not load in GitHub, download the file and open it locall
 
 The project consists of two VPCs connected through an active VPC Peering connection. A Bastion Host in VPC-A provides an SSH entry point to the private EC2 instances in both VPCs.
 
+```
 ```mermaid
 flowchart LR
     Internet((Internet)) --> IGW[Internet Gateway]
-    IGW --> Bastion["Bastion Host<br/>10.10.1.10"]
+    IGW --> Bastion["Bastion Host - 10.10.1.10"]
 
-    subgraph VPC_A["VPC-A: 10.10.0.0/16"]
+    subgraph VPC_A["VPC-A - 10.10.0.0/16"]
         Bastion
-        AppA["App-A<br/>10.10.2.10<br/>Private EC2"]
+        AppA["App-A - 10.10.2.10 - Private EC2"]
     end
 
-    subgraph VPC_B["VPC-B: 10.20.0.0/16"]
-        AppB["App-B<br/>10.20.1.10<br/>Private EC2"]
+    subgraph VPC_B["VPC-B - 10.20.0.0/16"]
+        AppB["App-B - 10.20.1.10 - Private EC2"]
     end
 
     AppA <--> Peering["Active VPC Peering"]
     Peering <--> AppB
     Bastion --> AppA
     Bastion --> AppB
+```
 ```
 
 ### VPC-A
