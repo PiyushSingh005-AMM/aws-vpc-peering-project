@@ -8,7 +8,12 @@ The infrastructure was created in the AWS Asia Pacific (Sydney) Region (`ap-sout
 
 ## Project Report
 
-[Download the EWB VPC Peering Project Report (PDF)](./PiyushSingh_EWB_VPC_Peering_Final_Report_Fixed.pdf)
+The complete project report is available below. If the PDF preview does not load in GitHub, please download the file to view all 14 pages.
+
+- **[View or download the project report (PDF)](./EWB-VPC-Peering-Project-Report_compressed.pdf)**
+- **[View project architecture, configuration, and evidence](./)**
+
+
 
 ## Architecture
 
