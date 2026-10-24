@@ -111,14 +111,16 @@ During troubleshooting, a temporary broader inbound ICMP rule was added to App-A
 
 SSH access to App-A and App-B through the Bastion Host was verified. App-B was accessed using its private IP address without assigning it a public IP address.
 
-### 4. ICMP Failure and Recovery
+### 4. Controlled ICMP Failure and Recovery
 
-The inbound ICMP rule was temporarily removed from App-A's security group to demonstrate how security rules affect connectivity.
+The controlled failure test was performed from App-A (`10.10.2.10`) to App-B (`10.20.1.10`).
 
-- **Failure test:** App-B sent four ping requests to App-A, and no replies were received.
-- **Recovery test:** After restoring the broader ICMP rule, App-B received four replies with 0% packet loss.
+- **Failure test:** The inbound ICMP Echo request rule was temporarily removed from App-B's security group (`ewb-sg-app-b`), which permits ping requests from App-A (`10.10.2.10/32`). App-A then ran `ping -c 4 10.20.1.10`. The result was 100% packet loss.
+- **Recovery test:** The ICMP rule was restored on App-B's security group. App-A repeated the same ping command and received four replies with 0% packet loss.
+- **SSH access:** The SSH inbound rule was kept in place during the test.
 
-These tests demonstrated bidirectional private connectivity and the effect of security group rules on network traffic.
+Evidence: `screenshots/11-icmp-blocked.png` and `screenshots/12-icmp-restored.png`.
+
 
 ## Evidence and Screenshots
 
