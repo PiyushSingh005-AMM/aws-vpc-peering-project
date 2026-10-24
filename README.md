@@ -15,11 +15,11 @@ The complete 14-page project report documents the architecture, AWS configuratio
 If the PDF preview does not load in GitHub, download the file and open it locally.
 
 
+
 ## Architecture
 
 The project consists of two VPCs connected through an active VPC Peering connection. A Bastion Host in VPC-A provides an SSH entry point to the private EC2 instances in both VPCs.
 
-```
 ```mermaid
 flowchart LR
     Internet((Internet)) --> IGW[Internet Gateway]
@@ -39,7 +39,7 @@ flowchart LR
     Bastion --> AppA
     Bastion --> AppB
 ```
-```
+
 
 ### VPC-A
 
