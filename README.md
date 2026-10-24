@@ -8,11 +8,11 @@ The infrastructure was created in the AWS Asia Pacific (Sydney) Region (`ap-sout
 
 ## Project Report
 
-The complete project report is available below. If the PDF preview does not load in GitHub, please download the file to view all 14 pages.
+The complete 14-page project report documents the architecture, AWS configuration, connectivity tests, and troubleshooting results.
 
-- **[View or download the project report (PDF)](./EWB-VPC-Peering-Project-Report_compressed.pdf)**
-- **[View project architecture, configuration, and evidence](./)**
+[View or download the EWB VPC Peering Project Report (PDF)](./EWB-VPC-Peering-Project-Report_compressed.pdf)
 
+If the PDF preview does not load in GitHub, download the file and open it locally.
 
 
 ## Architecture
@@ -22,18 +22,18 @@ The project consists of two VPCs connected through an active VPC Peering connect
 ```mermaid
 flowchart LR
     Internet((Internet)) --> IGW[Internet Gateway]
-    IGW --> Bastion["Bastion Host - 10.10.1.10"]
+    IGW --> Bastion["Bastion Host<br/>10.10.1.10"]
 
-    subgraph VPC_A["VPC-A - 10.10.0.0/16"]
+    subgraph VPC_A["VPC-A: 10.10.0.0/16"]
         Bastion
-        AppA["App-A - 10.10.2.10 - Private EC2"]
+        AppA["App-A<br/>10.10.2.10<br/>Private EC2"]
     end
 
-    subgraph VPC_B["VPC-B - 10.20.0.0/16"]
-        AppB["App-B - 10.20.1.10 - Private EC2"]
+    subgraph VPC_B["VPC-B: 10.20.0.0/16"]
+        AppB["App-B<br/>10.20.1.10<br/>Private EC2"]
     end
 
-    AppA <--> Peering["VPC Peering - Active"]
+    AppA <--> Peering["Active VPC Peering"]
     Peering <--> AppB
     Bastion --> AppA
     Bastion --> AppB
@@ -90,15 +90,15 @@ The VPC Peering connection is active, and the relevant routes are configured in 
 
 ## Security Configuration
 
-Security groups control traffic to and from the EC2 instances.
+Security groups control inbound and outbound traffic for the EC2 instances.
 
-- The Bastion Host accepts SSH connections according to its configured inbound rules.
-- App-A permits SSH access from the Bastion Host's private IP address.
-- App-B permits SSH access from the Bastion Host's private IP address.
-- ICMP security group rules control ping traffic between the application instances.
-- App-A and App-B use private IP addresses for inter-VPC communication.
+- The Bastion Host provides the SSH entry point from the internet, restricted by its configured inbound rules.
+- App-A and App-B use private IPv4 addresses and do not require public IP addresses for communication across the VPC peering connection.
+- SSH access to private instances is permitted according to the configured security group rules.
+- ICMP rules control ping traffic between App-A and App-B.
+- A temporary broader inbound ICMP rule was added to App-A during troubleshooting to restore reverse ping connectivity.
 
-During troubleshooting, a temporary broader inbound ICMP rule was added to App-A's security group to restore reverse ping connectivity. Security group rules should be reviewed and restricted to the minimum required traffic before production use.
+For production environments, security group rules should follow the principle of least privilege. Temporary troubleshooting rules should be removed or restricted after testing.
 
 ## Testing and Results
 
@@ -133,23 +133,39 @@ Evidence: `screenshots/11-icmp-blocked.png` and `screenshots/12-icmp-restored.pn
 
 ## Evidence and Screenshots
 
+### VPC and Network Configuration
+
+- [VPC configuration](screenshots/01-vpcs.png)
+- [Subnet configuration](screenshots/02-subnets.png)
+- [Public route table](screenshots/04a-public-routes.png)
+- [VPC-A private route table](screenshots/04b-private-a-routes.png)
+- [VPC-B private route table](screenshots/04c-private-b-routes.png)
+
+### Security Groups and EC2 Instances
+
+- [Bastion Host security group](screenshots/05a-bastion-sg.png)
+- [App-A security group](screenshots/05b-app-a-sg.png)
+- [App-B security group](screenshots/05c-app-b-sg.png)
+- [Bastion Host instance](screenshots/06a-bastion.png)
+- [App-A instance](screenshots/06b-app-a.png)
+- [App-B instance](screenshots/06c-app-b.png)
+
+### SSH Access
+
+- [SSH connection to Bastion Host](screenshots/07-bastion-ssh.png)
+- [SSH access to private App-B](screenshots/10-private-ssh-app-b.png)
+
 ### Connectivity Tests
 
-- [App-A to App-B ping success](screenshots/app-a-to-app-b-ping-success.png)
-- [App-B to App-A ping success](screenshots/app-b-to-app-a-ping-success.png)
-- [App-A to App-B connectivity test](screenshots/app-a-to-app-b-connectivity-test.png)
-- [App-B to App-A connectivity test](screenshots/app-b-to-app-a-connectivity-test.png)
+- [App-A to App-B ping](screenshots/08-app-a-to-app-b.png)
+- [App-B to App-A ping](screenshots/09-app-b-to-app-a.png)
 
-### Private Instance Access
+### ICMP Failure and Recovery
 
-- [App-B private IP and hostname](screenshots/app-b-private-access.png)
+- [ICMP blocked test](screenshots/11-icmp-blocked.png)
+- [ICMP restored test](screenshots/12-icmp-restored.png)
 
-### Security Group Troubleshooting
-
-- [ICMP blocked test](screenshots/icmp-blocked.png)
-- [ICMP restored test](screenshots/icmp-restored.png)
-
-These screenshots document private instance addressing, bidirectional connectivity, and ICMP failure-and-recovery testing.
+These screenshots provide evidence of network configuration, private instance access, bidirectional connectivity, and ICMP troubleshooting.
 
 ## Key Learnings
 
@@ -157,6 +173,7 @@ These screenshots document private instance addressing, bidirectional connectivi
 - Establishing VPC Peering connections
 - Configuring route tables for private network connectivity
 - Using a Bastion Host to access private EC2 instances
-- Understanding security groups and network ACLs
-- Troubleshooting ICMP connectivity
-- Testing
+- Configuring security groups for SSH and ICMP traffic
+- Troubleshooting connectivity failures
+- Testing bidirectional communication using private IPv4 addresses
+- Verifying SSH access without assigning public IP addresses to private instances
